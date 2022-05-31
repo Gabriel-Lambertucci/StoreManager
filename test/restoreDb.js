@@ -1,4 +1,4 @@
-const Importer = require("mysql-import");
+const Importer = require("mysql2-import");
 require("dotenv").config();
 
 const restoreDb = async () => {

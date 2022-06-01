@@ -9,6 +9,7 @@ router.get('/', async (req, res) => {
     const [rows] = await productsService.getAll();
     res.status(200).json(rows);
   } catch (err) {
+    console.log(err.message);
     res.status(500).json({ message: 'erro productsController' });
   }
 });
@@ -22,6 +23,7 @@ router.get('/:id', async (req, res) => {
     } 
     return res.status(200).json(response[0][0]);
   } catch (err) {
+    console.log(err.message);
     res.status(500).json({ message: 'Error' });
   }
 });

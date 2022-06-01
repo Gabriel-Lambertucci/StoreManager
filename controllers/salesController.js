@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
     const [rows] = await salesService.getAll();
     res.status(200).json(rows);
   } catch (err) {
-    res.status(500).json({ message: 'erro productsController' });
+    res.status(500).json({ message: 'erro salesController' });
   }
 });
 
@@ -17,7 +17,6 @@ router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const response = await salesService.getAll(id);
-    console.log(response[0]);
     if (response[0].length === 0) {
       return res.status(404).json({ message: 'Sale not found' });
     }

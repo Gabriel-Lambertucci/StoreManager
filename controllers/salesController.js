@@ -27,16 +27,10 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', salesMiddleware, async (req, res) => {
-  return null;
-})
+router.post('/', salesMiddleware, async (__req, __res) => null);
 
-router.put('/', salesMiddleware, async (req, res) => {
-  return null;
-})
+router.put('/', salesMiddleware, async (__req, __res) => null);
 
-router.put('/:id', salesMiddleware, async (req, res) => {
-  return null;
-})
+router.put('/:id', salesMiddleware, async (__req, __res) => null);
 
 module.exports = router;

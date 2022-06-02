@@ -15,17 +15,17 @@ const aux1 = (error) => {
 };
 
 const salesMiddleware = (req, res, next) => {
-  const error = req.body.map((item) => {
-    const { error } = salesDTO.validate(item, { abortEarly: false })
-    if(error !== undefined) {
+  const resultError = req.body.map((item) => {
+    const { error } = salesDTO.validate(item, { abortEarly: false });
+    if (error !== undefined) {
       return error.details[0];
-    };
-  }).filter((item) => item !== undefined);
-  console.log(error)
-  if (error) {
-    const messages = error.map((item) => item.message);
-    if (error[0].context.limit) {
-      const status = aux1(error);
+    }
+    return null;
+  }).filter((item) => item !== null);
+  if (resultError) {
+    const messages = resultError.map((item) => item.message);
+    if (resultError[0].context.limit) {
+      const status = aux1(resultError);
       console.log(status);
       return res.status(status).json({ message: messages[0] }); 
     }

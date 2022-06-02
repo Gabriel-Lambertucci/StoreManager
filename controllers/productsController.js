@@ -38,7 +38,7 @@ router.post('/', productsMiddleware, async (req, res) => {
   }
 });
 
-router.put('/', productsMiddleware, async (__req, __res) => {
+router.put('/:id', productsMiddleware, async (__req, __res) => {
   /* return res.status(200).json({ message: 'ok' }); */
 });
 

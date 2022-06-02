@@ -8,7 +8,9 @@ const productsDTO = Joi.object({
 });
 
 const aux1 = (error) => {
-  const status = error.details[0].context.label === 'name' ? 422 : 404;
+  console.log(error.details[0]);
+  const status = (
+    error.details[0].type === 'number.min' || error.details[0].type === 'string.min' ? 422 : 404);
   return status;
 };
 
@@ -18,6 +20,7 @@ const productsMiddleware = (req, res, next) => {
     const messages = error.details.map((item) => item.message);
     if (error.details[0].context.limit) {
       const status = aux1(error);
+      console.log(status);
       return res.status(status).json({ message: messages[0] }); 
     }
     return res.status(400).json({ message: messages[0] }); 

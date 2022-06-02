@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const salesService = require('../services/salesSevice');
+const salesMiddleware = require('../middlewares/salesMiddleware');
 
 router.get('/', async (req, res) => {
   try {
@@ -25,5 +26,14 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ message: 'Error' });
   }
 });
+
+router.post('/', salesMiddleware, async (req, res) => {
+  return null;
+})
+
+router.put('/', salesMiddleware, async (req, res) => {
+  return null;
+})
+
 
 module.exports = router;

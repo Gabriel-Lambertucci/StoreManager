@@ -30,13 +30,16 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', productsMiddleware, async (req, res) => {
-  const response = await productsService.postProduct(req.body);
-  return res.status(response.status).json(response.resp);
-})
+  try {
+    const response = await productsService.postProduct(req.body);
+    return res.status(response.status).json(response.resp);
+  } catch (err) {
+    return err.message;
+  }
+});
 
-router.put('/', productsMiddleware, async (req, res) => {
-  return res.status(200).json({ message: 'ok'});
-})
-
+router.put('/', productsMiddleware, async (__req, __res) => {
+  /* return res.status(200).json({ message: 'ok' }); */
+});
 
 module.exports = router;

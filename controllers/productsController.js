@@ -38,8 +38,15 @@ router.post('/', productsMiddleware, async (req, res) => {
   }
 });
 
-router.put('/:id', productsMiddleware, async (__req, __res) => {
-  /* return res.status(200).json({ message: 'ok' }); */
+router.put('/:id', productsMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, quantity } = req.body;
+    const response = await productsService.putProduct(id, name, quantity);
+    return res.status(response.status).json(response.resp);
+  } catch (err) {
+    console.log(err.message);
+  }
 });
 
 module.exports = router;

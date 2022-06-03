@@ -27,7 +27,24 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', salesMiddleware, async (__req, __res) => null);
+router.post('/', salesMiddleware, async (req, res) => {
+  let idPromises = [];
+  try {
+      idPromises = req.body.map(async (item) => {
+        const { productId, quantity } = item;
+        const response = await salesService.postSale(productId, quantity);
+        return response;
+      });
+      const id = await Promise.all(idPromises);
+      const result = {
+        id: id[0],
+        itemsSold: req.body,
+      };
+      res.status(201).json(result);
+    } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 router.put('/', salesMiddleware, async (__req, __res) => null);
 

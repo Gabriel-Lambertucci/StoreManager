@@ -22,11 +22,11 @@ const salesMiddleware = (req, res, next) => {
     }
     return null;
   }).filter((item) => item !== null);
-  if (resultError) {
+  if (resultError.length > 0) {
     const messages = resultError.map((item) => item.message);
     if (resultError[0].context.limit) {
       const status = aux1(resultError);
-      console.log(status);
+
       return res.status(status).json({ message: messages[0] }); 
     }
     return res.status(400).json({ message: messages[0] }); 

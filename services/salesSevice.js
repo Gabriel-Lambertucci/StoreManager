@@ -9,4 +9,12 @@ const getAll = async (id = null) => {
     return response;
 };
 
-module.exports = { getAll };
+const postSale = async (productId, quantity) => {
+  const completeDate = `
+  ${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} 
+  ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`;
+  const response = await salesModel.postSale(completeDate, productId, quantity);
+  return response;
+};
+
+module.exports = { getAll, postSale };

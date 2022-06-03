@@ -23,19 +23,24 @@ const postProduct = async ({ name, quantity }) => {
 
 const putProduct = async (id, name, quantity) => {
   const [rows] = await getAll();
-  console.log(rows);
   const isIdThere = rows.some((item) => item.id === parseInt(id, 10));
-  console.log(isIdThere);
   if (!isIdThere) {
     return { status: 404, resp: { message: 'Product not found' } };
   }
-  console.log('service', id, name, quantity);
   await productsModel.putProduct(id, name, quantity);
   const [rows2] = await getAll();
-  console.log(rows2);
   const newObject = rows2.find((item) => item.id === parseInt(id, 10));
-  console.log(newObject);
   return { status: 200, resp: newObject };
 };
 
-module.exports = { getAll, postProduct, putProduct };
+const deleteProduct = async (id) => {
+  const [rows] = await getAll();
+  const isIdThere = rows.some((item) => item.id === parseInt(id, 10));
+  if (!isIdThere) {
+    return { status: 404, resp: { message: 'Product not found' } };
+  }
+  await productsModel.deleteProduct(id);
+  return null;
+};
+  
+module.exports = { getAll, postProduct, putProduct, deleteProduct };

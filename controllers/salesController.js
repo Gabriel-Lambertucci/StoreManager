@@ -46,8 +46,24 @@ router.post('/', salesMiddleware, async (req, res) => {
   }
 });
 
-router.put('/', salesMiddleware, async (__req, __res) => null);
-
-router.put('/:id', salesMiddleware, async (__req, __res) => null);
+router.put('/:id', salesMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { productId, quantity } = req.body[0];
+    await salesService.putSale(id, productId, quantity);
+    const result = {
+      saleId: id,
+      itemUpdated: [
+        {
+          productId,
+          quantity,
+        },
+      ],
+    };
+    return res.status(200).json(result);
+  } catch (err) {
+    console.log(err.message);
+  }
+});
 
 module.exports = router;

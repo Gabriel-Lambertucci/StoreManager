@@ -17,4 +17,8 @@ const postSale = async (productId, quantity) => {
   return response;
 };
 
-module.exports = { getAll, postSale };
+const putSale = async (id, productId, quantity) => {
+  await salesModel.putSale(id, productId, quantity);
+};
+
+module.exports = { getAll, postSale, putSale };

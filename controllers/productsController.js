@@ -1,44 +1,39 @@
-const express = require('express');
-
-const router = express.Router();
-
 const productsService = require('../services/productsService');
-const productsMiddleware = require('../middlewares/productsMiddleware');
 
-router.get('/', async (req, res) => {
+const getFunction = async (req, res) => {
   try {
-    const [rows] = await productsService.getAll();
-    res.status(200).json(rows);
+    const response = await productsService.getAll();
+    return res.status(200).json(response);
   } catch (err) {
     console.log(err.message);
-    res.status(500).json({ message: 'erro productsController' });
+    return res.status(500).json({ message: 'erro productsController' });
   }
-});
+};
 
-router.get('/:id', async (req, res) => {
+const getIdFunction = async (req, res) => {
   const { id } = req.params;
   try {
     const response = await productsService.getAll(id);
     if (response[0].length === 0) {
       return res.status(404).json({ message: 'Product not found' });
-    } 
+    }
     return res.status(200).json(response[0][0]);
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: 'Error' });
   }
-});
+};
 
-router.post('/', productsMiddleware, async (req, res) => {
+const postFunction = async (req, res) => {
   try {
     const response = await productsService.postProduct(req.body);
     return res.status(response.status).json(response.resp);
   } catch (err) {
-    return err.message;
+    console.log(err.message);
   }
-});
+};
 
-router.put('/:id', productsMiddleware, async (req, res) => {
+const putFunction = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, quantity } = req.body;
@@ -47,9 +42,9 @@ router.put('/:id', productsMiddleware, async (req, res) => {
   } catch (err) {
     console.log(err.message);
   }
-});
+};
 
-router.delete('/:id', async (req, res) => {
+const deleteFunction = async (req, res) => {
   try {
     const { id } = req.params;
     const response = await productsService.deleteProduct(id);
@@ -60,6 +55,6 @@ router.delete('/:id', async (req, res) => {
   } catch (err) {
     console.log(err.message);
   }
-});
+};
 
-module.exports = router;
+module.exports = { getFunction, getIdFunction, postFunction, putFunction, deleteFunction };

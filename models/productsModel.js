@@ -2,12 +2,12 @@ const connection = require('../db/index');
 
 const getAll = async () => {
   const response = await connection.execute('SELECT * FROM StoreManager.products');
-  return response;
+  return response[0];
 };
 
 const getId = async (id) => {
-  const response = await connection.execute(`SELECT * FROM StoreManager.products where id=${id}`);
-  return response;
+  const [rows] = await connection.execute(`SELECT * FROM StoreManager.products where id=${id}`);
+  return [rows];
 };
 
 const postProduct = async (name, quantity) => {
